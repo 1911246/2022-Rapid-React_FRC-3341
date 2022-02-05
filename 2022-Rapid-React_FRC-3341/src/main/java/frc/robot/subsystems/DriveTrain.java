@@ -21,6 +21,10 @@ public class DriveTrain extends SubsystemBase
   /** Creates a new ExampleSubsystem. */
   private final WPI_TalonSRX _leftDriveTalon;
   private final WPI_TalonSRX _rightDriveTalon;
+
+  private final VictorSPX _leftVictor;
+  private final VictorSPX _rightVictor;
+
   private AHRS navx = new AHRS(SPI.Port.kMXP);
   private double ticksToCm  = 80.0/10180.5; //will test constant later
   private final int ticksInOneRevolution = 4096; 
@@ -32,8 +36,14 @@ public class DriveTrain extends SubsystemBase
     _leftDriveTalon = new WPI_TalonSRX(Constants.DriveTrainPorts.LeftDriveTalonPort);
     _rightDriveTalon = new WPI_TalonSRX(Constants.DriveTrainPorts.RightDriveTalonPort);
 
+    _leftVictor = new VictorSPX(Constants.LeftDriveVictorPort);
+    _rightVictor = new VictorSPX(Constants.RightDriveVictorPort); 
+
     _leftDriveTalon.setInverted(true);
     _rightDriveTalon.setInverted(false);
+
+    _leftVictor.setInverted(InvertType.FollowMaster);
+    _rightVictor.setInverted(InvertType.FollowMaster);
 
     _diffDrive = new DifferentialDrive(_leftDriveTalon, _rightDriveTalon);
 
