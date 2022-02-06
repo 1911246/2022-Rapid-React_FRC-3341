@@ -54,6 +54,15 @@ public class AutoDriveForward extends CommandBase
   @Override
   public void execute() 
   {
+    motor.set(pid.calculate(encoder.getPosition(),atSetpoint));
+
+    pid.setTolerance(5);
+    pid.atSetpoint();
+    resetEncoders();
+    pid.setIntegratorRange(-0.5, 0.5);
+    pid.enableContinuousInput(-180, 180);
+    MathUtil.clamp(pid.calculate(encoder.getDistance(), setpoint), -0.5, 0.5);
+
     SmartDashboard.putNumber("Ticks", _DriveTrain.getTicks());
     error = absDistance - Math.abs(_DriveTrain.getPosition());
     error = (error / absDistance)*2;

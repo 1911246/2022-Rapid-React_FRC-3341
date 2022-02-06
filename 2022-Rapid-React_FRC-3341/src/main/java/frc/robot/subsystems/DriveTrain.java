@@ -78,6 +78,12 @@ public class DriveTrain extends SubsystemBase
     return (_leftDriveTalon.getSelectedSensorPosition(0) + _rightDriveTalon.getSelectedSensorPosition(0)) / 2;
   }
 
+  public boolean atSetpoint() {
+    return m_controller.atSetpoint();
+  }
+
+
+
   @Override
   public void periodic() 
   {
